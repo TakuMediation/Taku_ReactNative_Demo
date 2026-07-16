@@ -1,0 +1,63 @@
+repositories {
+  flatDir {
+    dirs 'libs'
+  }
+  //Anythink(Core)
+  maven {
+    url "https://jfrog.takuad.com/artifactory/china_sdk"
+  }
+  maven { url "https://jfrog.anythinktech.com/artifactory/debugger" }
+  //Csj
+  maven {
+    url "https://artifact.bytedance.com/repository/pangle"
+  }
+
+}
+dependencies {
+  //Anythink (Necessary)
+  api "com.anythink.sdk:core-taku:6.5.73.3"
+
+  // Debugger UI（showDebuggerUI 真实拉起需要）
+  api("com.anythink.sdk:debugger-ui:1.1.5")
+
+  // ADX(Kuying/SDM)
+  api("com.anythink.sdk:adapter-taku-sdm:6.5.68.1.0")   // china_sdk
+  api("com.smartdigimkttech.sdk:sdm-sdk-cn:6.5.68")     // mavenCentral
+
+  //meishu
+  api "com.anythink.sdk:adapter-taku-meishu:2.5.13.0.1.0"
+  api "com.anythink.sdk:sdk-ads-meishu:2.5.13.0"
+  api "com.squareup.okhttp3:okhttp:3.12.1"
+  api "com.google.code.gson:gson:2.8.5"
+  api "com.android.support:cardview-v7:21.0.0"
+
+  //octopus
+  api "com.anythink.sdk:adapter-taku-octopus:2.6.5.7.1.0"
+  api "com.anythink.sdk:sdk-ads-octopus:2.6.5.7"
+
+  //beizi
+  api "com.anythink.sdk:adapter-taku-beizi:5.5.0.3.1.0"
+  api "com.anythink.sdk:sdk-ads-beizi:5.5.0.3"
+
+  //Kuaishou
+  api "com.anythink.sdk:adapter-taku-kuaishou:5.4.10.2.1.1"
+  api "com.anythink.sdk:sdk-ads-kuaishou:5.4.10.2"
+  api "com.android.support:design:28.0.0"
+
+  //Csj
+  api "com.anythink.sdk:adapter-taku-csj:7.6.1.2.1.0"
+  api "com.pangle.cn:ads-sdk-pro:7.6.1.2"
+
+  //Qumeng
+  api "com.anythink.sdk:adapter-taku-qumeng:3.481.10.447.1.0"
+  api "com.anythink.sdk:sdk-ads-qumeng:3.481.10.447"
+
+  //Anythink Kuying(Adx) SDK(Necessary)
+  api "com.anythink.sdk:adapter-taku-sdm:6.5.68.1.0"
+  api "com.smartdigimkttech.sdk:sdm-sdk-cn:6.5.68"
+
+  //GDT
+  api "com.anythink.sdk:adapter-taku-gdt:4.690.1560.1.0"
+  api "com.qq.e.union:union:4.690.1560"
+
+}

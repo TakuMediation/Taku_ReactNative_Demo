@@ -1,0 +1,83 @@
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+apply plugin: "com.android.library"
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+def getExtOrIntegerDefault(name) {
+  if (rootProject.ext.has(name)) {
+    return rootProject.ext.get(name)
+  }
+  return project.properties["android_" + name].toInteger()
+}
+
+def supportsNamespace() {
+  def parsed = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+  def major = parsed[0].toInteger()
+  def minor = parsed[1].toInteger()
+
+  // Namespace support was added in AGP 7.3.0
+  return (major == 7 && minor >= 3) || major >= 8
+}
+
+apply from: 'networks.gradle'
+
+android {
+  if (supportsNamespace()) {
+    namespace "com.anythink.reactnative"
+  }
+
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+  }
+
+  buildFeatures {
+    buildConfig true
+  }
+
+  // 按架构开关分流源码集：新架构编译 src/newarch（Spec/Interface 壳），旧架构编译 src/oldarch（@ReactMethod/@ReactProp 壳）。
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ['src/newarch/java']
+      } else {
+        java.srcDirs += ['src/oldarch/java']
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  lintOptions {
+    disable "GradleCompatible"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+tasks.withType(JavaCompile) {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+  // For < 0.71, resolved from node_modules/react-native/android local maven.
+  // For >= 0.71 New Arch, RN Gradle Plugin may substitute react-android.
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
+}

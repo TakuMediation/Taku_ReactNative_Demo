@@ -1,0 +1,186 @@
+// Load sensitive credentials from local.properties (not tracked by git)
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+repositories {
+  flatDir {
+    dirs 'libs'
+  }
+  //Anythink(Core)
+  maven {
+    url "https://jfrog.takuad.com/artifactory/china_sdk"
+  }
+
+  //honor
+  maven {
+    url "https://developer.hihonor.com/repo/"
+  }
+
+  //Csj
+  maven {
+    url "https://artifact.bytedance.com/repository/pangle"
+  }
+
+  //Tanx
+  maven {
+    url "https://maven.aliyun.com/repository/public"
+  }
+
+  //Mimo
+  maven {
+    url "https://repos.xiaomi.com/maven"
+    credentials {
+      username 'mimo-developer'
+      password localProperties.getProperty('MIMO_MAVEN_PASSWORD') ?: System.getenv('MIMO_MAVEN_PASSWORD') ?: ''
+    }
+  }
+
+  //JingDong
+  maven {
+    url "https://jitpack.io"
+  }
+
+  //Huawei
+  maven {
+    url "https://developer.huawei.com/repo/"
+  }
+
+  //Mintegral
+  maven {
+    url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support"
+  }
+
+}
+dependencies {
+  //Anythink (Necessary)
+  compileOnly "com.anythink.sdk:core-taku:6.5.73.3"
+
+  // Debugger UI
+  compileOnly "com.anythink.sdk:debugger-ui:1.1.5"
+
+  //honor
+  compileOnly "com.anythink.sdk:adapter-taku-honor:1.0.35.310.1.1"
+  compileOnly "com.hihonor.mcs:ads-lite:1.0.35.310"
+
+  //Baidu
+  compileOnly "com.anythink.sdk:adapter-taku-baidu:9.432.1.0"
+  compileOnly "mobi.baidu.sdk:mobads:9.432"
+
+  //meishu
+  compileOnly "com.anythink.sdk:adapter-taku-meishu:2.5.13.0.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-meishu:2.5.13.0"
+
+  //funlink
+  compileOnly "com.anythink.sdk:adapter-taku-funlink:2.9.1.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-funlink:2.9.1"
+
+  //octopus
+  compileOnly "com.anythink.sdk:adapter-taku-octopus:2.6.5.7.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-octopus:2.6.5.7"
+
+  //beizi
+  compileOnly "com.anythink.sdk:adapter-taku-beizi:5.5.0.3.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-beizi:5.5.0.3"
+
+  //Kuaishou
+  compileOnly "com.anythink.sdk:adapter-taku-kuaishou:5.4.10.2.1.1"
+  compileOnly "com.anythink.sdk:sdk-ads-kuaishou:5.4.10.2"
+
+  //aqy
+  compileOnly "com.anythink.sdk:adapter-taku-aqy:2.3.102.110.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-aqy:2.3.102.110"
+
+  //Sigmob
+  compileOnly "com.anythink.sdk:adapter-taku-sigmob:4.25.12.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-sigmob:4.25.12"
+
+  //Csj
+  compileOnly "com.anythink.sdk:adapter-taku-csj:7.6.1.2.1.0"
+  compileOnly "com.pangle.cn:ads-sdk-pro:7.6.1.2"
+
+  //lingye
+  compileOnly "com.anythink.sdk:adapter-taku-lingye:3.5.6.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-lingye:3.5.6"
+
+  //Oppo
+  compileOnly "com.anythink.sdk:adapter-taku-oppo:9.4.0.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-oppo:9.4.0"
+
+  //Tanx
+  compileOnly "com.anythink.sdk:adapter-taku-tanx:3.7.29.1.1"
+  compileOnly "com.tanx:TanxUISDK:3.7.29"
+
+  //fanwei
+  compileOnly "com.anythink.sdk:adapter-taku-fanwei:2.9.62.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-fanwei:2.9.62"
+
+  //Klevin
+  compileOnly "com.anythink.sdk:adapter-taku-klevin:2.11.0.3.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-klevin:2.11.0.3"
+
+  //Qumeng
+  compileOnly "com.anythink.sdk:adapter-taku-qumeng:3.481.10.447.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-qumeng:3.481.10.447"
+
+  //Mimo
+  compileOnly "com.anythink.sdk:adapter-taku-mimo:5.3.8.27.1.0"
+  compileOnly "com.miui.zeus:mimo-ad-sdk:5.3.8.27"
+  compileOnly "com.anythink.sdk:sdk-ads-mimo-sys-splash:1.0"
+
+  //JingDong
+  compileOnly "com.anythink.sdk:adapter-taku-jingdong:2.6.32.1.0"
+  compileOnly "com.github.JAD-FE-TEAM.JADYunAndroid:jad_yun_sdk:2.6.32"
+
+  //Vivo
+  compileOnly "com.anythink.sdk:adapter-taku-vivo:6.2.7.4.1.1"
+  compileOnly "com.anythink.sdk:sdk-ads-vivo:6.2.7.4"
+
+  //Huawei
+  compileOnly "com.anythink.sdk:adapter-taku-huawei-china:13.4.83.301.1.1"
+  compileOnly "com.huawei.hms:ads-lite:13.4.83.301"
+
+  //Anythink Kuying(Adx) SDK(Necessary)
+  compileOnly "com.anythink.sdk:adapter-taku-sdm:6.5.68.1.0"
+  compileOnly "com.smartdigimkttech.sdk:sdm-sdk-cn:6.5.68"
+
+  //Mintegral
+  compileOnly ("com.anythink.sdk:adapter-taku-mintegral-china:16.3.67.1.1") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:reward:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:newinterstitial:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:mbnative:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:mbnativeadvanced:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:mbsplash:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:mbbanner:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+  compileOnly ("com.mbridge.msdk.support:mbbid:16.3.67") {
+    exclude group: "com.tencent.mm.opensdk", module: "wechat-sdk-android"
+  }
+
+
+  //GDT
+  compileOnly "com.anythink.sdk:adapter-taku-gdt:4.690.1560.1.0"
+  compileOnly "com.qq.e.union:union:4.690.1560"
+
+  //TapTap
+  compileOnly "com.anythink.sdk:adapter-taku-tap:4.2.4.8.1.0"
+  compileOnly "com.anythink.sdk:sdk-ads-tap:4.2.4.8"
+
+}

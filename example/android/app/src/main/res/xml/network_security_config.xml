@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  仅用于调试 / 抓包：信任用户安装的 CA 证书，让 Charles / Fiddler / mitmproxy 等代理
+  能解密 HTTPS（否则 Android 7+ 默认不信任用户 CA，HTTPS 抓不到明文）。
+  ⚠️ 生产包请勿包含 user 证书信任 —— 这是 example/demo 专用。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

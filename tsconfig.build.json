@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig",
+  "exclude": ["example", "example-legacy", "lib", "**/__tests__/**", "**/*.test.ts", "**/*.test.tsx"]
+}

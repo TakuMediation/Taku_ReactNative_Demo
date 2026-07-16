@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.yarn/cache/
+.yarn/install-state.gz
+.pnp.*
+
+# Build outputs
+lib/
+build/
+android/build/
+android/.gradle/
+example/android/build/
+example/android/app/build/
+example/android/app/.cxx/
+example/android/.gradle/
+example/ios/build/
+example/ios/Pods/
+example/vendor/
+
+# Generated / local
+*.log
+.DS_Store
+.idea/
+*.iml
+local.properties
+example/android/local.properties
+example/ios/.xcode.env.local
+**/xcuserdata/
+
+# Metro
+.metro-health-check*
+example/node_modules/.generated/
+
+# Legacy example (standalone, not in workspace)
+example-legacy/
+
+# npm (project uses yarn)
+package-lock.json

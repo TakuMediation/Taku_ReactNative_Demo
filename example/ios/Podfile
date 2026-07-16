@@ -1,0 +1,48 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'ReactNativeSdkExample' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+
+    # React-Core-prebuilt 将 Yoga 内部 C++ 头（yoga/style/Style.h 等）放在自己的
+    # Headers/Public 目录下，而独立的 Yoga pod 只暴露 YG*.h。
+    # 此处将该路径追加到每个 target 的 HEADER_SEARCH_PATHS，解决
+    # "'yoga/style/Style.h' file not found" 编译错误。
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['HEADER_SEARCH_PATHS'] ||= '$(inherited)'
+        unless config.build_settings['HEADER_SEARCH_PATHS'].include?('React-Core-prebuilt/Yoga')
+          config.build_settings['HEADER_SEARCH_PATHS'] +=
+            ' "$(PODS_ROOT)/Headers/Public/React-Core-prebuilt/Yoga"'
+        end
+      end
+    end
+  end
+end

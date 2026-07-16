@@ -1,0 +1,178 @@
+{
+  "name": "@anythink/react-native-sdk",
+  "version": "1.0.0",
+  "description": "AnyThink React Native SDK",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @anythink/react-native-sdk-example",
+    "clean": "del-cli android/build android/.gradle example/android/build example/android/app/build example/android/app/.cxx example/android/.gradle example/ios/build example/node_modules/.generated lib build",
+    "clean:all": "yarn clean && del-cli node_modules example/node_modules example/vendor .idea package-lock.json",
+    "prepare": "bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "verify:arch-parity": "node scripts/verify-arch-parity.mjs",
+    "test:ios-paper": "./scripts/test-ios-paper-arch.sh",
+    "test:legacy-ios": "./scripts/test-legacy-ios.sh",
+    "start:metro:example": "./scripts/start-metro.sh example",
+    "start:metro:legacy": "./scripts/start-metro.sh legacy",
+    "run:ios:example": "./scripts/run-ios.sh example",
+    "run:ios:legacy": "./scripts/run-ios.sh legacy"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TakuMediation.git"
+  },
+  "author": "taku <junxing.wu@toponad.com> (https://www.takuad.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TakuMediation/issues"
+  },
+  "homepage": "https://github.com/TakuMediation#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@react-native-community/cli": "^20.1.3",
+    "@react-native/babel-preset": "0.85.0",
+    "@react-native/eslint-config": "0.85.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-test-renderer": "^19.1.0",
+    "del-cli": "^7.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.6",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.3",
+    "react": "19.2.3",
+    "react-native": "0.85.0",
+    "react-native-builder-bob": "^0.41.0",
+    "react-test-renderer": "^19.2.7",
+    "turbo": "^2.9.16",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "resolutions": {
+    "jest-util": "30.4.1"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "RNATBridgeSpec",
+    "type": "all",
+    "jsSrcsDir": "./src/specs",
+    "android": {
+      "javaPackageName": "com.anythink.reactnative"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/example/",
+      "/example-legacy/",
+      "/lib/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/specs/**",
+      "!src/**/*.d.ts",
+      "!src/index.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 80,
+        "statements": 80,
+        "functions": 80,
+        "branches": 75
+      },
+      "src/constants/Const.ts": {
+        "lines": 100,
+        "statements": 100
+      },
+      "src/events/ATAdEvents.ts": {
+        "lines": 95,
+        "statements": 95
+      },
+      "src/core/ATSDK.ts": {
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint"
+    ],
+    "version": "0.62.1"
+  }
+}
